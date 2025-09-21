@@ -1,0 +1,33 @@
+#Disclaimer: This Game is on german. Please don't wonder!
+
+import random
+import time
+
+Reset = "\033[0m"
+Gelb = "\033[33m"
+
+Anzahl = int(input("\nWie groß soll der Radius der Zahl sein? 1-"))
+
+print("Denk nach...")
+time.sleep(0.4)
+print("Ich habe eine Zahl\n")
+
+def spielen():
+    Zahl = random.randint(1, Anzahl)
+    Richtig = False
+    while Richtig == False:
+        Antwort = int(input("Was ist deine Idee?\n"))
+        if Antwort < Zahl:
+            print("Du musst etwas höher gehen...\n")
+        elif Antwort > Zahl:
+            print("Du musst etwas runter gehen...\n")
+        elif Antwort == Zahl:
+            print(f"{Gelb}Jackpot! Du hast gewonnen!{Reset}\n")
+            Richtig = True
+
+weiter = "ja"
+while weiter.lower() == "ja":
+    spielen()
+    weiter = input("Willst du nochmal spielen? Ja/Nein")
+else:
+    print("Dann bis zum nächsten mal!\n")
