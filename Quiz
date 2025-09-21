@@ -1,0 +1,76 @@
+#Disclaimer: The Quiz is on german. Please don't wonder!
+
+import difflib
+import re
+import random
+import time
+
+#Listen/Dictionaries/Variablen/Funktionen
+Pakete = ["marvel", "hauptstädte"]
+marvel = {
+    "Wer ist Spider Man?": "peterparker",
+    "Wer hat die Avengers-Initiative gegründet?": "nickfurry",
+    "Wie heißt der Hammer von Thor?": "mjölnir",
+    "Wie viele Infinity Stones gibt es?": "6",
+    "Wie heißt die Organisation die die wahre Zeit behütet?": "tva",
+    "Aus welchem Material besteht das Schild von Captain America?": "vibranium",
+    "Aus welchem Land stammt der Black Panther?": "wakanda",
+    "Wer hat Vision getötet?": "thanos",
+}
+hauptstädte = {
+    "Was ist die Hauptstadt von Deutschland?": "berlin",
+    "Was ist die Hauptstadt von Frankreich?": "paris",
+    "Was ist die Hauptstadt von Spanien?": "madrid",
+    "Was ist die Hauptstadt von Russland?": "moaskau",
+    "Was ist die Hauptstadt von Japan?": "tokio",
+    "Was ist die Hauptstadt von Schweden?": "stockholm",
+    "Was ist die Hauptstadt von Ägypten?": "kairo",
+    "Was ist die Hauptstadt von den Vereinigten Staten?": "washingtondc"
+}
+
+ergebnis = {
+    "Richtig": 0,
+    "Falsch": 0,
+}
+Anzahl = 0
+
+ROT = "\033[31m" #Rot
+GRÜN ="\33[32m" #Grün
+BLAU ="\33[34m" #Blau
+reset = "\033[0m"
+
+#Abfragen
+print(f"Welches Quiz wollen sie spielen: {BLAU}Marvel{reset},{BLAU} Hauptstädte?{reset}")
+Paket = input("Quiz: ")
+Paket = re.sub(r"\s+", "", Paket).lower()
+maxFragen = len(globals()[Paket])
+
+if Paket in Pakete:
+    print(f"Wie viele Fragen wollen sie haben? Für das Paket {Paket} gehen maximal {maxFragen}.")
+    Anzahl = int(input("Eingabe:"))
+    if Anzahl <= maxFragen:
+#Fragen auswahl
+        Frage = random.sample(list(globals()[Paket].keys()), Anzahl)
+        for f in Frage:
+            print(f)
+#Antworten
+            Antwort = input("Antwort: ")
+            Antwort = re.sub(r"\s+", "", Antwort).lower()
+            if Antwort == globals()[Paket][f]:
+                print(f"{GRÜN}Richtig!{reset}\n")
+                ergebnis["Richtig"] += 1
+            else:
+                print(f"{ROT}Falsch!{reset}\n")
+                ergebnis["Falsch"] += 1
+
+        print("\nSie sind fertig mit diesem Paket. Hier ist ihr Ergebnis:")
+        print("Richtig:", ergebnis["Richtig"])
+        print("Falsch:", ergebnis["Falsch"])
+
+    else:
+        print("Die Zahl ist zu hoch.")
+else:
+    print("Dies ist kein gültiges Paket.")
+
+input("Taste drücken zum beenden des Programms...")
+time.sleep(0.5)
