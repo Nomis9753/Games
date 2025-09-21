@@ -1,0 +1,66 @@
+#Disclaimer: The Game is on german. Please don't wonder!
+
+import random
+import time
+
+Woerter = (
+    "Hunde", "Tiere", "Essen", "Apfel", "Birne", "Stuhl", "Tisch", "Glück", "Blume", "Farbe",
+    "Kugel", "Welle", "Mauer", "Regen", "Wagen", "Brett", "Stein", "Miete", "Rasen", "Fisch",
+    "Sonne", "Mondt", "Fluss", "Karte", "Licht", "Boden", "Worte", "Stadt", "Frost",
+    "Kraft", "Brand", "Zweig", "Traum", "Riese", "Sturm", "Winde", "Dampf", "Farbe", "Kunst",
+    "Blatt", "Schaf", "Ruder", "Faden", "Hafen", "Gabel", "Macht", "Werte",
+    "Zelle", "Kette", "Pferd", "Kamel", "Tiger", "Zebra", "Möbel", "Glanz",
+    "Runde", "Eiche", "Buche", "Tanne", "Weide", "Ahorn", "Birke", "Wachs", "Seide",
+    "Faser", "Stoff", "Leder", "Glase", "Steak", "Sauce", "Brote", "Torte", "Suppe", "Salat",
+    "Kakao", "Honig", "Milch", "Wurst", "Bacon", "Pizza", "Bohne", "Reise", "Nudel",
+    "Creme", "Eisig",
+)
+Auswahl = random.choice(Woerter)
+
+
+Reset = "\033[0m"
+Grün = "\033[32m"
+Gelb = "\033[33m"
+Rot = "\033[31m"
+
+Fertig = False
+
+def Abfrage():
+    return input("Eingabe: ")
+
+def Kontrolle(Eingabe):
+    ergebnis = []
+    for i, buchstabe in enumerate(Eingabe):
+        if i < len(Auswahl) and buchstabe == Auswahl[i]:
+            ergebnis.append(f"{Grün}{buchstabe}{Reset}")
+        elif buchstabe in Auswahl:
+            ergebnis.append(f"{Gelb}{buchstabe}{Reset}")
+        else:
+            ergebnis.append(f"{Rot}{buchstabe}{Reset}")
+    print("".join(ergebnis))
+    if Eingabe == Auswahl:
+        Fertig = True
+        return Fertig
+
+Versuche = 0
+while Versuche <= 5:
+    Eingabe = Abfrage()
+    laenge = len(Eingabe)
+
+    if laenge == 5:
+        print(f"Versuch Nummer: {Versuche}")
+        Kontrolle(Eingabe)
+        if Eingabe == Auswahl:
+            Fertig = True
+
+        if Fertig == True:
+            print("Richtig!")
+            time.sleep(1)
+            break
+    else:
+        print("Es müssen 5 Buchstaben sein!\n")
+        time.sleep(0.5)
+    Versuche += 1
+print("Verloren...")
+print(f"Die Lösung war: {Auswahl}")
+input()
